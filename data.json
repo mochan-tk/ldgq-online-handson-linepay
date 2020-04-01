@@ -1,0 +1,24 @@
+[
+	{
+		"id": "0",
+		"tour": "ハワイ３泊５日間の旅",
+		"tour_image_url": "https://www.dl.dropboxusercontent.com/s/0w9y87a2uvhc6ng/hawaii.png?dl=0",
+		"place": "ハワイ",
+		"price": "¥90,000"
+	},
+	{
+		"id": "1",
+		"tour": "グアム３泊４日間の旅",
+		"tour_image_url": "https://www.dl.dropboxusercontent.com/s/dza5yn25csnt3i7/guam.png?dl=0",
+		"place": "グアム",
+		"price": "¥50,000"
+	},
+	{
+		"id": "2",
+		"tour": "ソウル２泊３日間の旅",
+		"tour_image_url": "https://www.dl.dropboxusercontent.com/s/ogxrwa0bldr6njm/seoul.png?dl=0",
+		"place": "ソウル",
+		"price": "¥25,000"
+	}
+]
+
