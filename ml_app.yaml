@@ -1,0 +1,9 @@
+runtime: custom
+env: flex
+readiness_check:
+  app_start_timeout_sec: 1200
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 2
+resources:
+  disk_size_gb: 20

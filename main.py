@@ -1,3 +1,13 @@
+"""
+import tensorflow.keras
+from PIL import Image, ImageOps
+import numpy as np
+
+import requests
+
+from io import BytesIO
+"""
+
 import logging
 import uuid
 import os
@@ -12,7 +22,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
+    MessageEvent, TextMessage, TextSendMessage, FlexSendMessage, ImageMessage
 )
 from linepay import LinePayApi
 from google.cloud import datastore
@@ -115,6 +125,62 @@ def get_plan_flex_msg(user_id, json_data):
         }
     }
 
+"""
+header = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + CHANNEL_ACCESS_TOKEN
+}
+
+# Disable scientific notation for clarity
+np.set_printoptions(suppress=True)
+
+# Load the model
+model = tensorflow.keras.models.load_model('keras_model.h5')
+
+# Create the array of the right shape to feed into the keras model
+# The 'length' or number of images you can put into the array is
+# determined by the first position in the shape tuple, in this case 1.
+data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+
+# 画像を受け取る部分
+@handler.add(MessageEvent, message=ImageMessage)
+def handle_image(event):
+    print("handle_image:", event)
+
+    line_url = 'https://api.line.me/v2/bot/message/' + event.message.id + '/content/'
+
+    # 画像の取得
+    result = requests.get(line_url, headers=header)
+
+    # 画像の保存
+    image = Image.open(BytesIO(result.content))
+
+    #resize the image to a 224x224 with the same strategy as in TM2:
+    #resizing the image to be at least 224x224 and then cropping from the center
+    size = (224, 224)
+    image = ImageOps.fit(image, size, Image.ANTIALIAS)
+
+    #turn the image into a numpy array
+    image_array = np.asarray(image)
+
+    # display the resized image
+    #image.show()
+
+    # Normalize the image
+    normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
+
+    # Load the image into the array
+    data[0] = normalized_image_array
+
+    # run the inference
+    prediction = model.predict(data)
+    print(str(prediction))
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=str(prediction))
+    )
+"""
 
 @handler.add(MessageEvent, message=TextMessage)
 def message_text(event):
@@ -276,7 +342,6 @@ def pay_confirm():
 	client.delete(key)
 	
 	return "お支払いありがとうございました！"
-
 
 if __name__ == "__main__":
 	app.run(debug=True, port=8000)
