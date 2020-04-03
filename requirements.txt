@@ -3,12 +3,12 @@ python-dotenv==0.10.3
 line-bot-sdk==1.16.0
 line-pay==0.1.0
 google-cloud-datastore==1.11.0
-# gunicorn
-# Keras
-# absl-py
-# grpcio
-# Markdown
-# protobuf
-# Werkzeug
-# tensorflow-cpu
-# Pillow
+gunicorn==20.0.4
+# Keras==2.3.1
+# absl-py==0.9.0
+# grpcio==1.27.2
+# Markdown==3.2.1
+# protobuf==3.11.3
+# Werkzeug==1.0.1
+# tensorflow-cpu==2.1.0
+# Pillow==7.1.1
