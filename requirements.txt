@@ -10,5 +10,5 @@ google-cloud-datastore==1.11.0
 # Markdown
 # protobuf
 # Werkzeug
-# tensorflow
+# tensorflow-cpu
 # Pillow
